@@ -25,12 +25,15 @@ router.post("/api/workouts", (req, res) => {
 });
 
 //route to add exercises
-router.put("/api/workouts/:id", ({ body, params }, res) => {
-    db.findByIdAndUpdate(params.id, { $push: { exercises: body } }, { new: true, runValidators: true })
+router.put("/api/workouts/:id", (req, res) => {
+    console.log(req.body,req.params,"PUT with DB ")
+    db.findByIdAndUpdate(req.params.id,{$push:{exercises:req.body}},{new:true})
         .then(dbWorkout => {
+            console.log("PUT db after saving to DB",req.body, req.params, dbWorkout)
             res.json(dbWorkout);
         })
         .catch(err => {
+            console.log("Err in put route",err)
             res.status(400).json(err);
         });
 });
