@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require("../models/workout");
 
-//route to get workouts
+//this rout gets the workouts
 router.get("/api/workouts", (req, res) => {
     db.find({})
         .then(dbWorkout => {
@@ -13,7 +13,7 @@ router.get("/api/workouts", (req, res) => {
         });
 });
 
-//route to create new workouts
+//this is the route to create a new workout
 router.post("/api/workouts", (req, res) => {
     db.create(req.body)
         .then(dbWorkout => {
@@ -24,9 +24,9 @@ router.post("/api/workouts", (req, res) => {
         });
 });
 
-//route to add exercises
+//this is the route to add exercises
 router.put("/api/workouts/:id", (req, res) => {
-    console.log(req.body,req.params,"PUT with DB ")
+    console.log(req.body,params,"PUT with DB ")
     db.findByIdAndUpdate(req.params.id,{$push:{exercises:req.body}},{new:true})
         .then(dbWorkout => {
             console.log("PUT db after saving to DB",req.body, req.params, dbWorkout)
@@ -38,7 +38,7 @@ router.put("/api/workouts/:id", (req, res) => {
         });
 });
 
-//route for workouts in range
+//this is a route for exercise duration
 router.get("/api/workouts/range", (req, res) => {
     db.aggregate([{
         $addFields: {
